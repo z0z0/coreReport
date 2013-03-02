@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+  <!-- todo: xml: web-controller: ukloniti ove privremene, rasporediti po 
+    modulima -->
+
+  <bean id="coreBaseController" abstract="true" parent="baseController"
+    scope="session" lazy-init="true">
+    <constructor-arg index="0" ref="coreModuleBean" />
+  </bean>
+
+  <bean id="coreBaseSelectionController" class="rs.fimes.web.controller.BaseSelectionController"
+    parent="baseController" abstract="true" scope="session" lazy-init="true">
+    <constructor-arg ref="coreModuleBean" />
+  </bean>
+
+  <bean id="usrKorisnikBaseSelectionController" abstract="true"
+    parent="baseSelectionController" scope="session" lazy-init="true">
+    <constructor-arg index="0" ref="coreModuleBean" />
+    <property name="modalPanelUtil" ref="modalPanelUtil" />
+  </bean>
+
+  <bean id="zzBaseSelectionController" abstract="true"
+    parent="baseSelectionController" scope="session" lazy-init="true">
+    <constructor-arg index="0" ref="coreModuleBean" />
+    <property name="modalPanelUtil" ref="modalPanelUtil" />
+  </bean>
+
+  <bean id="zzBaseController" abstract="true" parent="baseController"
+    scope="session" lazy-init="true">
+    <constructor-arg index="0" ref="coreModuleBean" />
+    <property name="modalPanelUtil" ref="modalPanelUtil" />
+  </bean>
+
+  <bean id="loginController" class="rs.fimes.web.controller.LoginController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="login" type="java.lang.String" />
+  </bean>
+
+  <bean id="coreModalDaNeDijalogController"
+    class="rs.fimes.web.controller.core.CoreModalDaNeDijalogController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreModalDaNeDijalogController"
+      type="java.lang.String" />
+  </bean>
+
+  <bean id="coreModalDaNeOdustaniDijalogController"
+    class="rs.fimes.web.controller.core.CoreModalDaNeOdustaniDijalogController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreModalDaNeOdustaniDijalogController"
+      type="java.lang.String" />
+  </bean>
+
+  <bean id="coreModalOkDialogController"
+    class="rs.fimes.web.controller.core.CoreModalOkDialogController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreModalOkDialogController"
+      type="java.lang.String" />
+  </bean>
+
+  <bean id="coreModalErrorDialogController"
+    class="rs.fimes.web.controller.core.CoreModalErrorDialogController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreModalErrorDialogController"
+      type="java.lang.String" />
+  </bean>
+
+  <bean id="coreModalUserPassPotvrdaController"
+    class="rs.fimes.web.controller.core.CoreModalUserPassPotvrdaController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreModalUserPassPotvrdaController"
+      type="java.lang.String" />
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi" />
+  </bean>
+
+  <bean id="coreModalDijalogController"
+    class="rs.fimes.web.controller.core.CoreModalDijalogController"
+    parent="coreBaseController" scope="session" lazy-init="true"
+    init-method="init">
+    <constructor-arg value="coreModalDijalogController"
+      type="java.lang.String" />
+    <property name="coreWebController" ref="coreWebController" />
+  </bean>
+
+  <!-- global controllers -->
+
+
+
+
+  <bean id="usrKorisnikSelectionController"
+    class="rs.fimes.web.controller.core.UsrKorisnikSelectionController"
+    parent="coreBaseSelectionController" scope="session" lazy-init="true"
+    init-method="pretraga">
+    <constructor-arg value="usrKorisnikSelectionController"
+      type="java.lang.String" />
+    <property name="usrKorisnikDataTableModelApi" ref="usrKorisnikDataTableModelApi" />
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi" />
+  </bean>
+
+  <bean id="fileUploadBean" class="rs.fimes.web.controller.global.FileUploadBean" />
+
+  <bean id="promenaLozinkeController" class="rs.fimes.web.controller.PromenaLozinkeController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg index="1" value="promenaLozinke"
+      type="java.lang.String" />
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi" />
+    <property name="coreModalOkDialogController" ref="coreModalOkDialogController" />
+  </bean>
+
+  <bean id="phaseTracker" class="rs.fimes.web.PhaseTracker" />
+
+  <bean id="ajaxStatusController" class="rs.fimes.web.controller.core.AjaxStatusController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg index="1" value="ajaxStatusController"
+      type="java.lang.String" />
+  </bean>
+
+  <bean id="coreIzvestajController" class="rs.fimes.web.controller.core.CoreIzvestajController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreIzvestajController"
+      type="java.lang.String" />
+    <property name="coreWebController" ref="coreWebController" />
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi" />
+    <property name="sysRepIzvestajServiceApi" ref="sysRepIzvestajServiceApi" />
+    <property name="xsysParametarServiceApi" ref="xsysParametarServiceApi" />
+  </bean>
+
+
+  <bean id="coreNazivRequiredController"
+    class="rs.fimes.web.controller.core.CoreNazivRequiredController"
+    parent="coreBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="coreNazivRequiredController"
+      type="java.lang.String" />
+  </bean>
+
+  <bean id="zzOperativaStavkaSelectionController"
+    class="rs.fimes.web.controller.core.ZzOperativaStavkaSelectionController"
+    parent="zzBaseSelectionController" scope="session" lazy-init="true">
+    <constructor-arg value="zzOperativaStavkaSelectionController"
+      type="java.lang.String" />
+    <property name="zzOperativaStavkaExtendedDataTableModelApi"
+      ref="zzOperativaStavkaExtendedDataTableModelApi"></property>
+    <property name="zzOperativaStavkaServiceApi" ref="zzOperativaStavkaServiceApi"></property>
+  </bean>
+
+  <bean id="zzOperativaStavkaUnosController"
+    class="rs.fimes.web.controller.core.ZzOperativaStavkaUnosController"
+    parent="zzBaseController" scope="session" lazy-init="true">
+    <constructor-arg value="zzOperativaStavkaUnosController"
+      type="java.lang.String" />
+    <property name="sffIzvorFinansiranjaServiceApi" ref="sffIzvorFinansiranjaServiceApi"></property>
+    <property name="sffIzvorFinansiranjaLovSelectionController"
+      ref="sffIzvorFinansiranjaLovSelectionController"></property>
+    <property name="sffVrstaUslugeTroskaLovSelectionController"
+      ref="sffVrstaUslugeTroskaLovSelectionController"></property>
+    <property name="sffVrstaUslugeTroskaServiceApi" ref="sffVrstaUslugeTroskaServiceApi"></property>
+    <property name="sffMestoTroskaServiceApi" ref="sffMestoTroskaServiceApi"></property>
+    <property name="sffMestoTroskaLovSelectionController" ref="sffMestoTroskaLovSelectionController"></property>
+    <property name="ppPoslovniPartnerServiceApi" ref="ppPoslovniPartnerServiceApi"></property>
+    <property name="ppPoslovniPartnerSelectionController" ref="ppPoslovniPartnerSelectionController"></property>
+    <property name="ppPartnerRacunServiceApi" ref="ppPartnerRacunServiceApi"></property>
+    <property name="zzOperativaStavkaServiceApi" ref="zzOperativaStavkaServiceApi"></property>
+    <property name="zzOperativaStavkaSelectionController" ref="zzOperativaStavkaSelectionController"></property>
+    <property name="sffBankaSelectionController" ref="sffBankaSelectionController"></property>
+  </bean>
+
+  <bean id="korisnikKategorijaSelectionController"
+    class="rs.fimes.web.controller.KorisnikKategorijaSelectionController"
+    parent="usrKorisnikBaseSelectionController" scope="session"
+    lazy-init="true">
+    <constructor-arg value="korisnikKategorijaSelectionController"
+      type="java.lang.String" />
+    <property name="orgFirmaLovSelectionController" ref="orgFirmaLovSelectionController"></property>
+    <property name="osbOsobaSelectionController" ref="osbOsobaSelectionController"></property>
+    <property name="xusrKategorijaServiceApi" ref="xusrKategorijaServiceApi"></property>
+    <property name="usrKorisnikKategorijaServiceApi" ref="usrKorisnikKategorijaServiceApi"></property>
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi"></property>
+    <property name="orgFirmaServiceApi" ref="orgFirmaServiceApi"></property>
+    <property name="usrKorisnikFirmaServiceApi" ref="usrKorisnikFirmaServiceApi"></property>
+    <property name="usrKorisnikExtendedDataTableModelApi" ref="usrKorisnikExtendedDataTableModelApi"></property>
+  </bean>
+
+
+</beans>

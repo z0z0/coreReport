@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:sf="http://www.springframework.org/tags/faces"
+  xmlns:a4j="http://richfaces.org/a4j"
+  xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Fimes</title>
+</head>
+<body>
+<f:view>
+
+  <ui:composition template="/WEB-INF/layouts/standard.jspx">
+    <ui:define name="content">
+      <h:form id="forma">
+        <rich:panel styleClass="fimesMainForm">
+
+          <h:panelGrid styleClass="fimesFormTitle" width="100%">
+            <h:outputText
+              value="#{coreIzvestajController.module.messageSource.commonIzvestaji}" />
+          </h:panelGrid>
+
+          <h:panelGrid id="polja" columns="2" cellspacing="5px"
+            styleClass="fimesTableCentered">
+
+            <rich:extendedDataTable id="tabelaIzvestaj" height="280px"
+              width="360px" enableContextMenu="false"
+              headerClass="fimesReportTableCaption"
+              noDataLabel="#{coreIzvestajController.module.messageSource.commonNoDataLabel}"
+              value="#{coreIzvestajController.sysRepReports}" var="sysRepReport">
+
+              <a4j:support event="onRowClick" status="waitStatus"
+                immediate="true"
+                action="#{coreIzvestajController.populatePanelGrid}"
+                reRender="parametersGrid,dugmeIzvestajSave,dugmeIzvestajView">
+                <f:setPropertyActionListener value="#{sysRepReport}"
+                  target="#{coreIzvestajController.sysRepReport}" />
+              </a4j:support>
+              <rich:column width="100%">
+                <f:facet name="header">
+                  <h:outputText
+                    value="#{coreIzvestajController.module.messageSource.commonIzvestajOdabir}" />
+                </f:facet>
+                <h:outputText value="#{sysRepReport.sysRepReportUGrupi.naziv}"
+                  title="#{sysRepReport.sysRepReportUGrupi.naziv}" />
+              </rich:column>
+
+            </rich:extendedDataTable>
+
+            <h:panelGrid id="parametersGrid" columns="1" width="100%">
+
+              <h:outputText styleClass="fimesPanelHeader"
+                value="#{coreIzvestajController.parametriGridHeader}" />
+              <rich:spacer height="10px"/>
+
+              <h:panelGrid columns="2"
+                styleClass="fimesReportParametersGrid"
+                columnClasses="fimesReportParameterLabel,fimesReportParameterField"
+                binding="#{coreIzvestajController.parametriGrid}" />
+                
+            </h:panelGrid>
+
+            <a4j:region>
+              <a4j:include id="lovViewId"
+                viewId="#{coreIzvestajController.lovViewId}" />
+            </a4j:region>
+
+          </h:panelGrid>
+
+          <h:panelGroup layout="block"
+            styleClass="alignCenter fimesTopPadding">
+            <!-- 
+            <h:outputLink value="#{jasperReportsUtil.repUrlAttachment}"
+                styleClass="fimesButton fimesButtonSubmit fimesButtonImageRepSave">
+              <h:outputText value="output link attachment" />
+            </h:outputLink>
+            <rich:spacer width="15" />
+            <h:outputLink value="#{jasperReportsUtil.repUrlInline}" target="izvestajFrame" 
+                styleClass="fimesButton fimesButtonSubmit fimesButtonImageRepSave">
+              <h:outputText value="output link frame" />
+            </h:outputLink>
+            <rich:spacer width="15" />
+            <h:outputLink value="#{jasperReportsUtil.repUrlInline}" target="_blank" 
+                styleClass="fimesButton fimesButtonSubmit fimesButtonImageRepSave">
+              <h:outputText value="output link blank" />
+            </h:outputLink>
+            <rich:spacer width="15" />
+            <a4j:commandLink value="a4j link" 
+              styleClass="fimesButton fimesButtonSubmit fimesButtonImageOk"  
+              action="#{jasperReportsUtil.goToRepUrl}" 
+              target="_blank"/>
+            <rich:spacer width="15" />
+            <a4j:commandButton value="a4j:commandButton - preko jave"
+              styleClass="fimesButton fimesButtonSubmit fimesButtonImageOk"
+              action="#{jasperReportsUtil.goToRepUrl}"/>
+            
+            <rich:spacer width="50" />
+            
+            promeniti na oba dugmeta ovo, kada budu gotovi izvestaji
+            window.open('#{jasperReportsUtil.reportUrl}');
+                         -->
+            <a4j:commandButton id="dugmeIzvestajSave"
+              value="#{coreIzvestajController.module.messageSource.commonIzvestajPreuzmi}"
+              title="#{coreIzvestajController.module.messageSource.commonIzvestajPreuzmiTitle}"
+              styleClass="fimesButton fimesButtonSubmit fimesButtonImageRepSave"
+              onclick="#{rich:component('ajaxStatusModalPanel')}.show();"
+              action="#{coreIzvestajController.reportSave}"
+              oncomplete="if(#{empty facesContext.maximumSeverity}){window.open('#{jasperReportsUtil.reportUrl}');}" 
+              disabled="#{empty coreIzvestajController.sysRepReport}"/>
+            <rich:spacer width="30px"/>
+            <a4j:commandButton id="dugmeIzvestajView"
+              value="#{coreIzvestajController.module.messageSource.commonIzvestajPrikazi}"
+              title="#{coreIzvestajController.module.messageSource.commonIzvestajPrikaziTitle}"
+              styleClass="fimesButton fimesButtonSubmit fimesButtonImageRepView"
+              action="#{coreIzvestajController.reportView}"
+              oncomplete="if(#{empty facesContext.maximumSeverity}){window.open('#{jasperReportsUtil.reportUrl}', '#{coreIzvestajController.popupWindowName}', 'dependent=yes, menubar=no, toolbar=no');}"
+              disabled="#{empty coreIzvestajController.sysRepReport}"/>
+          </h:panelGroup>
+
+          <rich:layout>
+            <rich:layoutPanel position="bottom">
+              <rich:layoutPanel position="right">
+                <h:commandButton styleClass="fimesButton"
+                  immediate="true"
+                  value="#{coreIzvestajController.module.messageSource.common_izlaz}"
+                  action="meni" />
+              </rich:layoutPanel>
+            </rich:layoutPanel>
+          </rich:layout>
+
+        </rich:panel>
+      </h:form>
+      <a4j:include
+        viewId="#{coreWebController.ajaxStatusModalPanelView}" />
+      <a4j:status id="waitStatus"
+        onstart="#{rich:component('ajaxStatusModalPanel')}.show()"
+        onstop="#{rich:component('ajaxStatusModalPanel')}.hide()" />
+    </ui:define>
+  </ui:composition>
+
+</f:view>
+</body>
+</html>

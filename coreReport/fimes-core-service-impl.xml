@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+  <bean id="coreBaseService" abstract="true" parent="baseService"
+    lazy-init="true" scope="singleton">
+    <constructor-arg index="0" ref="coreModuleBean" />
+  </bean>
+
+  <bean id="xsysParametarServiceApi" class="rs.fimes.service.impl.core.XsysParametarServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="xsysParametarServiceApi"
+      type="java.lang.String" />
+    <property name="xsysParametarDAO" ref="xsysParametarDAO" />
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi" />
+  </bean>
+
+
+  <bean id="usrKorisnikServiceApi" class="rs.fimes.service.impl.core.UsrKorisnikServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="usrKorisnikServiceApi"
+      type="java.lang.String" />
+    <property name="usrKorisnikDAO" ref="usrKorisnikDAO" />
+    <property name="xusrKategorijaDAO" ref="xusrKategorijaDAO" />
+    <property name="userSessionUtil" ref="userSessionUtil" />
+  </bean>
+
+  <bean id="orgFirmaServiceApi" class="rs.fimes.service.impl.core.OrgFirmaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="orgFirmaServiceApi"
+      type="java.lang.String" />
+    <property name="orgFirmaDAO" ref="orgFirmaDAO" />
+  </bean>
+
+  <bean id="rzsDrzavaServiceApi" class="rs.fimes.service.impl.core.RzsDrzavaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="rzsDrzavaServiceApi"
+      type="java.lang.String" />
+    <property name="rzsDrzavaDAO" ref="rzsDrzavaDAO" />
+  </bean>
+
+  <bean id="rzsNaseljeServiceApi" class="rs.fimes.service.impl.core.RzsNaseljeServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="rzsNaseljeServiceApi"
+      type="java.lang.String" />
+    <property name="rzsNaseljeDAO" ref="rzsNaseljeDAO" />
+  </bean>
+
+
+  <bean id="sfsJedinicaMereServiceApi" class="rs.fimes.service.impl.core.SfsJedinicaMereServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="sfsJedinicaMereServiceApi"
+      type="java.lang.String" />
+    <property name="sfsJedinicaMereDAO" ref="sfsJedinicaMereDAO" />
+  </bean>
+
+  <bean id="xsfsTipKontaktaServiceApi" class="rs.fimes.service.impl.core.XsfsTipKontaktaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="xsfsTipKontaktaServiceApi"
+      type="java.lang.String" />
+    <property name="xsfsTipKontaktaDAO" ref="xsfsTipKontaktaDAO" />
+  </bean>
+
+  <bean id="sysRepIzvestajServiceApi" class="rs.fimes.service.impl.core.SysRepIzvestajServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="sysRepIzvestajServiceApi"
+      type="java.lang.String" />
+    <property name="sysRepReportUGrupiDAO" ref="sysRepReportUGrupiDAO" />
+    <property name="sysRepReportUGrupiPresetDAO" ref="sysRepReportUGrupiPresetDAO" />
+    <property name="sysRepParametarReportaDAO" ref="sysRepParametarReportaDAO" />
+    <property name="sysRepReportUFormatuDAO" ref="sysRepReportUFormatuDAO" />
+    <property name="sysRepReportPosebniDAO" ref="sysRepReportPosebniDAO" />
+    <property name="sysRepReportPosebniPresetDAO" ref="sysRepReportPosebniPresetDAO" />
+  </bean>
+
+  <bean id="xsysEvidencijaKolonaServiceApi"
+    class="rs.fimes.service.impl.core.XsysEvidencijaKolonaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="xsysEvidencijaKolonaService"
+      type="java.lang.String" />
+    <property name="xsysEvidencijaKolonaDAO" ref="xsysEvidencijaKolonaDAO" />
+  </bean>
+
+  <bean id="rzsOpstinaServiceApi" class="rs.fimes.service.impl.core.RzsOpstinaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="rzsOpstinaServiceApi"
+      type="java.lang.String" />
+    <property name="rzsOpstinaDAO" ref="rzsOpstinaDAO" />
+  </bean>
+
+  <bean id="zzOperativaStavkaServiceApi"
+    class="rs.fimes.service.impl.core.ZzOperativaStavkaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="zzOperativaStavkaServiceApi"
+      type="java.lang.String" />
+    <property name="zzOperativaStavkaDAO" ref="zzOperativaStavkaDAO" />
+    <property name="ppPartnerRacunDAO" ref="ppPartnerRacunDAO"></property>
+  </bean>
+
+  <bean id="coreIzvestajServiceApi" class="rs.fimes.service.impl.core.CoreIzvestajServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="coreIzvestajServiceApi"
+      type="java.lang.String" />
+    <property name="xsfsValutaDAO" ref="xsfsValutaDAO" />
+    <property name="xsysParametarServiceApi" ref="xsysParametarServiceApi" />
+    <property name="usrKorisnikServiceApi" ref="usrKorisnikServiceApi" />
+  </bean>
+
+  <bean id="xsfsMesecUGodiniServiceApi" class="rs.fimes.service.impl.core.XsfsMesecUGodiniServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="xsfsMesecUGodiniServiceApi"
+      type="java.lang.String" />
+    <property name="xsfsMesecUGodiniDAO" ref="xsfsMesecUGodiniDAO" />
+  </bean>
+
+  <bean id="xusrKategorijaServiceApi" class="rs.fimes.service.impl.core.XusrKategorijaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1" value="xusrKategorijaServiceApi"
+      type="java.lang.String" />
+    <property name="xusrKategorijaDAO" ref="xusrKategorijaDAO" />
+  </bean>
+
+  <bean id="usrKorisnikKategorijaServiceApi"
+    class="rs.fimes.service.impl.core.UsrKorisnikKategorijaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1"
+      value="usrKorisnikKategorijaServiceApi" type="java.lang.String" />
+    <property name="usrKorisnikKategorijaDAO" ref="usrKorisnikKategorijaDAO" />
+  </bean>
+
+  <bean id="usrKorisnikFirmaServiceApi"
+    class="rs.fimes.service.impl.core.UsrKorisnikFirmaServiceImpl"
+    parent="coreBaseService" lazy-init="true">
+    <constructor-arg index="1"
+      value="usrKorisnikFirmaServiceApi" type="java.lang.String" />
+    <property name="usrKorisnikFirmaDAO" ref="usrKorisnikFirmaDAO" />
+  </bean>
+
+</beans>
